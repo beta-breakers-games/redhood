@@ -12,57 +12,60 @@ public class Player : MonoBehaviour
     private bool isGrounded;
 
     private Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private SpriteRenderer sr; // ← přidáno
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>(); // ← inicializace SpriteRenderer
     }
 
-    // Update is called once per frame
     void Update()
     {
         float moveInput = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed,rb.linearVelocity.y);
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+
+        // Otočení hráče podle směru
+        if (moveInput < 0) sr.flipX = true;  // doleva
+        else if (moveInput > 0) sr.flipX = false; // doprava
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.linearVelocity = new Vector2 (rb.linearVelocity.x, jumpForce);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
 
         SetAnimation(moveInput);
     }
 
-    private void FixedUpdate ()
+    private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    private void SetAnimation (float moveInput)
-     {
+    private void SetAnimation(float moveInput)
+    {
         if (isGrounded)
-         {
-            if(moveInput ==0)
+        {
+            if (moveInput == 0)
             {
                 animator.Play("Player_Idle");
-             }
-
-             else
-             {
+            }
+            else
+            {
                 animator.Play("Player_Run");
-             }
-         }
-
-         else
-           {
-                if(rb.linearVelocityY > 0)
-                {
-                    animator.Play("Player_Jump");
-                }
-                else
-                 {
-                    animator.Play("Player_Fall");
-                }
-             }
+            }
+        }
+        else
+        {
+            if (rb.velocity.y > 0)
+            {
+                animator.Play("Player_Jump");
+            }
+            else
+            {
+                animator.Play("Player_Fall");
+            }
+        }
     }
 }
