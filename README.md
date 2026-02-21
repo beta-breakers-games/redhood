@@ -2,6 +2,15 @@
 
 Repository: https://github.com/beta-breakers-games/redhood/
 
+
+In Unity:
+(I got these set up by default on 6.0 unity)
+```
+Edit → Project Settings → Editor
+Asset Serialization → Force Text
+Version Control → Visible Meta Files
+```
+
 ---
 
 ## 1. Install Git for Windows
