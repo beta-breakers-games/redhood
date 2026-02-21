@@ -963,7 +963,7 @@ GameObject:
   - component: {fileID: 175137107}
   - component: {fileID: 175137109}
   - component: {fileID: 175137108}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: hole_tree_collider_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1750,7 +1750,7 @@ GameObject:
   - component: {fileID: 298285894}
   - component: {fileID: 298285896}
   - component: {fileID: 298285895}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: hole_tree_collider_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4624,7 +4624,7 @@ GameObject:
   - component: {fileID: 607395339}
   - component: {fileID: 607395341}
   - component: {fileID: 607395340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hole_first_collider_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6387,7 +6387,7 @@ GameObject:
   - component: {fileID: 801469564}
   - component: {fileID: 801469566}
   - component: {fileID: 801469565}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: hole_tree_collider_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10974,7 +10974,7 @@ GameObject:
   - component: {fileID: 1408901764}
   - component: {fileID: 1408901766}
   - component: {fileID: 1408901765}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: hole_first_collider_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13762,7 +13762,7 @@ GameObject:
   - component: {fileID: 1869801991}
   - component: {fileID: 1869801993}
   - component: {fileID: 1869801992}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hole_first_collider_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
