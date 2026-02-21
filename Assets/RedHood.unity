@@ -858,8 +858,9 @@ GameObject:
   m_Component:
   - component: {fileID: 124953932}
   - component: {fileID: 124953935}
-  - component: {fileID: 124953934}
+  - component: {fileID: 124953937}
   - component: {fileID: 124953936}
+  - component: {fileID: 124953934}
   - component: {fileID: 124953933}
   m_Layer: 6
   m_Name: push_tree_collider
@@ -906,10 +907,10 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 85
+    m_LowerAngle: -5
+    m_UpperAngle: 81
 --- !u!50 &124953934
 Rigidbody2D:
   serializedVersion: 5
@@ -1009,6 +1010,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PushTree2D
   <thisRigidbody>k__BackingField: {fileID: 124953934}
+  <thisBoxCollider>k__BackingField: {fileID: 0}
+--- !u!61 &124953937
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124953931}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &128655642
 GameObject:
   m_ObjectHideFlags: 0
@@ -13348,7 +13396,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   lastStandingPosition: {x: 0, y: 0}
-  minMoveToUpdateLastStanding: 0.05
+  lastStandingRecordInterval: 0.225
   footstepManager: {fileID: 2053374454}
   audioSource: {fileID: 1548409580}
   inhaleClip: {fileID: 8300000, guid: d35926d734accf1468f94b639f21ef0d, type: 3}
