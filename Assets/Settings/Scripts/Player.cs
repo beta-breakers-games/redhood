@@ -8,17 +8,22 @@ public class Player : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Last standing")]
+    public Vector2 lastStandingPosition;
+    public float minMoveToUpdateLastStanding = 0.05f;
+    
     private Rigidbody2D rb;
     private bool isGrounded;
 
     private Animator animator;
     private SpriteRenderer sr; // ← přidáno
-
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>(); // ← inicializace SpriteRenderer
+        lastStandingPosition = transform.position; 
     }
 
     void Update()
@@ -37,12 +42,20 @@ public class Player : MonoBehaviour
 
         SetAnimation(moveInput);
     }
-
+    
     private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    }
 
+        // Update last standing only when on ground (and not moving upward)
+        if (isGrounded && rb.linearVelocity.y <= 0.01f)
+        {
+            Vector2 p = transform.position;
+            if (Vector2.Distance(p, lastStandingPosition) >= minMoveToUpdateLastStanding)
+                lastStandingPosition = p;
+        }
+    }
+    
     private void SetAnimation(float moveInput)
     {
         if (isGrounded)
