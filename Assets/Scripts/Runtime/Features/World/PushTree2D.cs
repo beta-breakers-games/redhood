@@ -1,109 +1,84 @@
+using System.Collections;
 using UnityEngine;
-using Runtime.Features.Player;
 
 namespace Runtime.Features.World
 {
-    public class PushTree2D : MonoBehaviour, IInteractable
+    public class PushTree2D : MonoBehaviour, IInteractable2D
     {
-        [Header("Save ID (unique & stable)")] [SerializeField]
-        private string id;
+        public string id;
+        public bool fallRight = true;
+        public Transform pivot;
+        public float fallAngle = 90f;
+        public float fallDuration = 0.5f;
+        public Collider2D standingCollider;
+        public Collider2D bridgeCollider;
 
-        [Header("Fall (fixed)")] [SerializeField]
-        private bool fallRight = true; // set in Inspector; never changes at runtime
+        [SerializeField] private AnimationCurve fallCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-        [SerializeField] private Transform pivot;
-        [SerializeField] private float fallAngle = 90f;
-        [SerializeField] private float fallDuration = 0.5f;
-
-        [SerializeField] private Collider2D standingCollider;
-        [SerializeField] private Collider2D bridgeCollider;
-
-        private bool _fallen;
-        private Quaternion _startRot;
-        private Quaternion _targetRot;
-
-        public string Id => id;
-        public bool IsFallen => _fallen;
-        public bool FallRight => fallRight;
+        private bool _isFalling;
+        private bool _isFallen;
 
         private void Awake()
         {
-            if (!pivot) pivot = transform;
-            _startRot = pivot.rotation;
-            if (bridgeCollider) bridgeCollider.enabled = false;
-        }
-
-        public void Interact(PlayerInteractor2D player)
-        {
-            if (_fallen) return;
-            BeginFall(animated: true);
-        }
-
-        public void ApplySavedState(bool fallen)
-        {
-            _fallen = fallen;
-            if (_fallen) SetFallenInstant();
-            else SetStanding();
-        }
-
-        private void BeginFall(bool animated)
-        {
-            _fallen = true;
-            if (standingCollider) standingCollider.enabled = false;
-
-            _targetRot = ComputeTargetRotation();
-
-            if (!animated)
+            if (bridgeCollider != null)
             {
-                SetFallenInstant();
-                return;
+                bridgeCollider.enabled = false;
+                bridgeCollider.gameObject.SetActive(false);
             }
+        }
 
-            StopAllCoroutines();
+        public bool Interact(GameObject interactor)
+        {
+            if (_isFalling || _isFallen)
+                return false;
+
             StartCoroutine(FallRoutine());
+            return true;
         }
 
-        private Quaternion ComputeTargetRotation()
+        private IEnumerator FallRoutine()
         {
-            float dir = fallRight ? -1f : 1f; // flip sign if your sprite rotates opposite
-            return _startRot * Quaternion.Euler(0f, 0f, dir * fallAngle);
-        }
+            _isFalling = true;
 
-        private void SetFallenInstant()
-        {
-            pivot.rotation = ComputeTargetRotation();
-            if (standingCollider) standingCollider.enabled = false;
-            if (bridgeCollider) bridgeCollider.enabled = true;
-        }
+            Transform stand = standingCollider != null ? standingCollider.transform : transform;
+            Vector3 pivotPos = pivot != null ? pivot.position : stand.position;
+            Vector3 startPos = stand.position;
+            Quaternion startRot = stand.rotation;
+            Vector3 offset = startPos - pivotPos;
 
-        private void SetStanding()
-        {
-            pivot.rotation = _startRot;
-            if (standingCollider) standingCollider.enabled = true;
-            if (bridgeCollider) bridgeCollider.enabled = false;
-        }
+            float signedAngle = fallRight ? -Mathf.Abs(fallAngle) : Mathf.Abs(fallAngle);
+            float duration = Mathf.Max(0.01f, fallDuration);
+            float elapsed = 0f;
 
-        private System.Collections.IEnumerator FallRoutine()
-        {
-            float t = 0f;
-            while (t < 1f)
+            while (elapsed < duration)
             {
-                t += Time.deltaTime / fallDuration;
-                float eased = 1f - Mathf.Pow(1f - Mathf.Clamp01(t), 3f);
-                pivot.rotation = Quaternion.Slerp(_startRot, _targetRot, eased);
+                float t = elapsed / duration;
+                float eased = fallCurve != null ? fallCurve.Evaluate(t) : t;
+                float angle = signedAngle * eased;
+                Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+
+                stand.rotation = rot * startRot;
+                stand.position = pivotPos + (rot * offset);
+
+                elapsed += Time.deltaTime;
                 yield return null;
             }
 
-            pivot.rotation = _targetRot;
-            if (bridgeCollider) bridgeCollider.enabled = true;
-        }
+            Quaternion finalRot = Quaternion.Euler(0f, 0f, signedAngle);
+            stand.rotation = finalRot * startRot;
+            stand.position = pivotPos + (finalRot * offset);
 
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (string.IsNullOrWhiteSpace(id))
-            id = System.Guid.NewGuid().ToString("N");
-    }
-#endif
+            if (standingCollider != null)
+                standingCollider.enabled = false;
+
+            if (bridgeCollider != null)
+            {
+                bridgeCollider.gameObject.SetActive(true);
+                bridgeCollider.enabled = true;
+            }
+
+            _isFalling = false;
+            _isFallen = true;
+        }
     }
 }
