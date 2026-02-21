@@ -7,10 +7,11 @@ public class Player : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
-
+    
     [Header("Last standing")]
     public Vector2 lastStandingPosition;
-    public float minMoveToUpdateLastStanding = 0.05f;
+    public float lastStandingRecordInterval = 0.225f;
+    private float lastStandingTimer = 0f;
     
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -52,15 +53,14 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
+        lastStandingTimer += Time.fixedDeltaTime;
         // Update last standing only when on ground (and not moving upward)
-        if (isGrounded && rb.linearVelocity.y <= 0.01f)
+        if (!isGrounded)
         {
-            Vector2 p = transform.position;
-            if (Vector2.Distance(p, lastStandingPosition) >= minMoveToUpdateLastStanding)
-                lastStandingPosition = p;
+            lastStandingTimer = 0f; // reset only when recorded
+            return;
         }
-
+        
         RaycastHit2D hit = Physics2D.Raycast(
         groundCheck.position,
         Vector2.down,
@@ -71,6 +71,20 @@ public class Player : MonoBehaviour
         {
         currentSurfaceTag = hit.collider.tag;
         }
+
+        if (lastStandingTimer >= lastStandingRecordInterval)
+        {
+            lastStandingPosition = transform.position;
+            lastStandingTimer = 0f; // reset only when recorded
+            // Debug.Log($"set standing position: {lastStandingPosition}");
+        }
+    }
+    
+    public void RestoreToLastStanding()
+    {
+        if (rb != null)  // safety check
+            rb.linearVelocity = Vector2.zero;
+        transform.position = lastStandingPosition;
     }
     
     private void SetAnimation(float moveInput)
