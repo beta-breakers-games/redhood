@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         float moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
         // Otočení hráče podle směru
         if (moveInput < 0) sr.flipX = true;  // doleva
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
         SetAnimation(moveInput);
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (rb.velocity.y > 0)
+            if (rb.linearVelocity.y > 0)
             {
                 animator.Play("Player_Jump");
             }

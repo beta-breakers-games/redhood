@@ -2570,7 +2570,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3708869598491986349, guid: 768d13fc8bc54b34e9b63869efd02676, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9077,7 +9077,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 9171507520174366393, guid: 768d13fc8bc54b34e9b63869efd02676, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -12112,8 +12112,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -69.06, y: 4.68, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1955253734}
   m_Father: {fileID: 0}
@@ -13165,7 +13165,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1758233485}
-  - component: {fileID: 1758233484}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -13173,23 +13172,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1758233484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758233483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: b51535e952c9c3c409ae4452b9e627c5, type: 2}
 --- !u!4 &1758233485
 Transform:
   m_ObjectHideFlags: 0
