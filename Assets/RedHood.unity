@@ -781,8 +781,8 @@ GameObject:
   - component: {fileID: 124953932}
   - component: {fileID: 124953935}
   - component: {fileID: 124953934}
-  - component: {fileID: 124953933}
   - component: {fileID: 124953936}
+  - component: {fileID: 124953933}
   m_Layer: 6
   m_Name: push_tree_collider
   m_TagString: Untagged
@@ -828,10 +828,10 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 1
+  m_UseLimits: 0
   m_AngleLimits:
-    m_LowerAngle: 90
-    m_UpperAngle: 0
+    m_LowerAngle: 0
+    m_UpperAngle: 85
 --- !u!50 &124953934
 Rigidbody2D:
   serializedVersion: 5
@@ -12324,7 +12324,7 @@ GameObject:
   - component: {fileID: 1548409578}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
