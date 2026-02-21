@@ -63,7 +63,6 @@ namespace Runtime.Features.Player
                     Debug.Log($"{name} Interact: no interactable components found.", this);
                 return;
             }
-
             bool did = best.Interact(gameObject);
             if (enableDebugLogs)
             {
