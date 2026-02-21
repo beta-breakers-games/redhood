@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
 
     private Animator animator;
     private SpriteRenderer sr; // ← přidáno
+    public FootstepManager footstepManager;
+    private string currentSurfaceTag = "Gravel"; //default surface
+
+    public AudioSource audioSource;
+    public AudioClip inhaleClip;
+    public AudioClip exhaleClip;
     
     void Start()
     {
@@ -54,6 +60,17 @@ public class Player : MonoBehaviour
             if (Vector2.Distance(p, lastStandingPosition) >= minMoveToUpdateLastStanding)
                 lastStandingPosition = p;
         }
+
+        RaycastHit2D hit = Physics2D.Raycast(
+        groundCheck.position,
+        Vector2.down,
+        0.5f
+        );
+
+        if (hit.collider != null)
+        {
+        currentSurfaceTag = hit.collider.tag;
+        }
     }
     
     private void SetAnimation(float moveInput)
@@ -81,4 +98,12 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    public void PlayFootstep()
+    {
+    footstepManager.PlayFootstep(currentSurfaceTag);
+    }
+
+    public void PlayInhale() => audioSource.PlayOneShot(inhaleClip);
+    public void PlayExhale() => audioSource.PlayOneShot(exhaleClip);
 }

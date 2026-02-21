@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: d1b706354467e5441918d0ec95a1c906
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RedHood.unity
     guid: 66c2ecef79cf720428fc7904ead778e9
+  - enabled: 1
+    path: Assets/RedHood.unity
+    guid: 65488039ec7c04c4c99a1c07c6da439a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
