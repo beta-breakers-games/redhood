@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
-public class Player : MonoBehaviour
+namespace Runtime.Features.Player
 {
+    [MovedFrom(true, "", null, "Player")]
+    public class Player : MonoBehaviour
+    {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform groundCheck;
@@ -120,5 +124,6 @@ public class Player : MonoBehaviour
     }
 
     public void PlayInhale() => audioSource.PlayOneShot(inhaleClip);
-    public void PlayExhale() => audioSource.PlayOneShot(exhaleClip);
+        public void PlayExhale() => audioSource.PlayOneShot(exhaleClip);
+    }
 }
