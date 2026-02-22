@@ -699,6 +699,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &106404522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106404523}
+  m_Layer: 0
+  m_Name: darkness_stop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &106404523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106404522}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 78, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 189773086}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108496301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,6 +1666,7 @@ Transform:
   - {fileID: 696492858}
   - {fileID: 1691301366}
   - {fileID: 261182675}
+  - {fileID: 106404523}
   m_Father: {fileID: 1991764882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &189773087
@@ -18850,13 +18882,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.World.DarknessControl
   startPoint: {fileID: 261182675}
+  stopPoint: {fileID: 106404523}
   speed: 4
   repelAnimationDurationSec: 1
   repelStunDurationSec: 0.5
   loadFromSave: 0
-  player: {fileID: 0}
+  player: {fileID: 1548409579}
   playerTag: Player
-  enableLogs: 0
+  enableLoseCheck: 1
+  loseDistance: 2
+  loseDelaySec: 2
+  disablePlayerOnLose: 1
+  loseSceneName: you_lost
+  enableLogs: 1
 --- !u!95 &1691301368
 Animator:
   serializedVersion: 7
@@ -21236,6 +21274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1897295659}
   - component: {fileID: 1897295660}
+  - component: {fileID: 1897295661}
   m_Layer: 0
   m_Name: TreeDead_2_0
   m_TagString: Untagged
@@ -21317,6 +21356,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1897295661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897295658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8bb38330a90f47db614f5853598cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.UI.PauseToMenu
+  menuSceneName: Menu
 --- !u!1 &1930616091
 GameObject:
   m_ObjectHideFlags: 0

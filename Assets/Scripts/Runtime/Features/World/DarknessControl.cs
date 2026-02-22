@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Runtime.Core;
 
 namespace Runtime.Features.World
@@ -7,25 +8,48 @@ namespace Runtime.Features.World
     {
         private GameContext _context;
         [Header("Start")]
+        [Tooltip("Mandatory. Initial spawn position for darkness.")]
         [SerializeField] private Transform startPoint;
+        [Tooltip("Optional. When darkness reaches/passes this X, it snaps and stops.")]
         [SerializeField] private Transform stopPoint;
 
         [Header("Motion")]
+        [Tooltip("Forward movement speed (units per second).")]
         [SerializeField] private float speed = 0.8f;
+        [Tooltip("Time in seconds to animate the repel pushback.")]
         [SerializeField] private float repelAnimationDurationSec = 1f;
+        [Tooltip("Extra pause after repel completes (seconds).")]
         [SerializeField] private float repelStunDurationSec = 0.5f;
+        [Tooltip("If true, loads saved darkness position on start (when a save exists).")]
         [SerializeField] private bool loadFromSave = true;
 
         [Header("Player")]
+        [Tooltip("Optional. Player component reference for distance checks.")]
         [SerializeField] private Runtime.Features.Player.Player player;
+        [Tooltip("Used to auto-find player if Player reference is empty.")]
         [SerializeField] private string playerTag = "Player";
 
+        [Header("Lose")]
+        [Tooltip("If enabled, triggers lose when within loseDistance of player.")]
+        [SerializeField] private bool enableLoseCheck = true;
+        [Tooltip("Distance at or below which the player is considered caught.")]
+        [SerializeField] private float loseDistance = 1f;
+        [Tooltip("Delay before loading the lose scene (seconds).")]
+        [SerializeField] private float loseDelaySec = 1f;
+        [Tooltip("Disable player movement while waiting to load the lose scene.")]
+        [SerializeField] private bool disablePlayerOnLose = true;
+        [Tooltip("Scene name to load when player is caught.")]
+        [SerializeField] private string loseSceneName = "you_lost";
+
+        [Tooltip("Enable debug logs for setup and lose events.")]
         [SerializeField] private bool enableLogs = false;
 
         private float _x;
         private float _y;
         private Coroutine _repelRoutine;
         private float _stunTimer;
+        private bool _hasLost;
+        private Coroutine _loseRoutine;
         
         private void Awake()
         {
@@ -70,6 +94,11 @@ namespace Runtime.Features.World
 
         private void Update()
         {
+            if (!_hasLost && enableLoseCheck && GetDistanceToPlayer() <= loseDistance)
+            {
+                TriggerLose();
+                return;
+            }
             if (_repelRoutine != null)
                 return;
             if (_stunTimer > 0f)
@@ -126,6 +155,52 @@ namespace Runtime.Features.World
             if (player == null)
                 return float.PositiveInfinity;
             return Vector2.Distance(transform.position, player.transform.position);
+        }
+
+        public void TriggerLose()
+        {
+            if (_hasLost)
+                return;
+            _hasLost = true;
+            if (player != null)
+            {
+                if (stopPoint == null)
+                    stopPoint = player.transform;
+                else
+                    stopPoint.position = player.transform.position;
+                _x = player.transform.position.x;
+                transform.position = new Vector3(_x, _y, transform.position.z);
+                if (disablePlayerOnLose)
+                    player.enabled = false;
+            }
+            if (enableLogs)
+                Debug.Log("DarknessControl: player caught, loading lose scene.", this);
+            if (_loseRoutine != null)
+                StopCoroutine(_loseRoutine);
+            _loseRoutine = StartCoroutine(LoadLoseSceneAfterDelay());
+        }
+
+        private System.Collections.IEnumerator LoadLoseSceneAfterDelay()
+        {
+            if (loseDelaySec > 0f)
+                yield return new WaitForSeconds(loseDelaySec);
+            if (!string.IsNullOrEmpty(loseSceneName) && CanLoadScene(loseSceneName))
+            {
+                SceneManager.LoadScene(loseSceneName);
+            }
+            else if (CanLoadScene("Menu"))
+            {
+                SceneManager.LoadScene("Menu");
+            }
+            else if (enableLogs)
+            {
+                Debug.LogWarning($"DarknessControl: no valid lose scene to load ('{loseSceneName}').", this);
+            }
+        }
+
+        private static bool CanLoadScene(string sceneName)
+        {
+            return Application.CanStreamedLevelBeLoaded(sceneName);
         }
     }
 }
