@@ -10,24 +10,34 @@ namespace Runtime.Core
     */
     {
         public static GameContext I { get; private set; }
-        public Core.SaveStorage Saves { get; private set; }
-        public int ActiveSlot { get; private set; } = 1;
+        [SerializeField] private int totalSlots = 3;
+
+        public GlobalConfig Config { get; private set; }
+        public SaveStorage Saves { get; private set; }
+        public int ActiveSlotIndex { get; private set; } = 1;
+        public int TotalSlots => Mathf.Max(1, totalSlots);
 
         private void Awake()
         {
             if (I != null) { Destroy(gameObject); return; }
             I = this;
             DontDestroyOnLoad(gameObject);
-            Saves = new SaveStorage();
-            ActiveSlot = GlobalConfigStorage.Load().activeSlot;
+            Config = GlobalConfigStorage.Load();
+            ActiveSlotIndex = Mathf.Clamp(Config.activeSlot, 1, TotalSlots);
+            if (Config.activeSlot != ActiveSlotIndex)
+            {
+                Config.activeSlot = ActiveSlotIndex;
+            }
+            Saves = new SaveStorage(ActiveSlotIndex);
         }
 
         public void SetActiveSlot(int slot)
         {
-            ActiveSlot = Mathf.Clamp(slot, 1, 3);
-            var cfg = GlobalConfigStorage.Load();
-            cfg.activeSlot = ActiveSlot;
-            GlobalConfigStorage.Save(cfg);
+            ActiveSlotIndex = Mathf.Clamp(slot, 1, TotalSlots);
+            if (Config == null)
+                Config = GlobalConfigStorage.Load();
+            Config.activeSlot = ActiveSlotIndex;
+            Saves = new SaveStorage(ActiveSlotIndex);
         }
     }
 }

@@ -16,19 +16,53 @@ namespace Runtime.Core
 
     public class SaveStorage
     {
-        private const string FileName = "save.json";
+        private readonly int _slot;
 
-        private static string PathToFile => Path.Combine(Application.persistentDataPath, FileName);
+        public int Slot => _slot;
 
-        public static void Save(SaveData data)
+        public SaveStorage(int slot)
+        {
+            _slot = Mathf.Max(1, slot);
+        }
+
+        private string PathToFile =>
+            Path.Combine(Application.persistentDataPath, $"save_slot_{_slot}.json");
+
+        public void Save(SaveData data)
         {
             string json = JsonUtility.ToJson(data, prettyPrint: true);
             string dir = Path.GetDirectoryName(PathToFile);
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-            File.WriteAllText(PathToFile, json);
+            string tempPath = PathToFile + ".tmp";
+            string backupPath = PathToFile + ".old";
+
+            File.WriteAllText(tempPath, json);
+
+            if (File.Exists(PathToFile))
+            {
+                try
+                {
+                    File.Replace(tempPath, PathToFile, backupPath, true);
+                    if (File.Exists(backupPath))
+                        File.Delete(backupPath);
+                }
+                catch
+                {
+                    if (File.Exists(backupPath))
+                        File.Delete(backupPath);
+                    File.Move(PathToFile, backupPath);
+                    File.Move(tempPath, PathToFile);
+                    if (File.Exists(backupPath))
+                        File.Delete(backupPath);
+                }
+            }
+            else
+            {
+                File.Move(tempPath, PathToFile);
+            }
         }
 
-        public static SaveData Load()
+        public SaveData Load()
         {
             if (!File.Exists(PathToFile))
                 return new SaveData(); // defaults
@@ -37,11 +71,13 @@ namespace Runtime.Core
             return JsonUtility.FromJson<SaveData>(json) ?? new SaveData();
         }
 
-        public static bool HasSave() => File.Exists(PathToFile);
+        public bool HasSave() => File.Exists(PathToFile);
 
-        public static void DeleteSave()
+        public void DeleteSave()
         {
             if (File.Exists(PathToFile)) File.Delete(PathToFile);
+            if (File.Exists(PathToFile + ".old")) File.Delete(PathToFile + ".old");
+            if (File.Exists(PathToFile + ".tmp")) File.Delete(PathToFile + ".tmp");
         }
     }
 }
