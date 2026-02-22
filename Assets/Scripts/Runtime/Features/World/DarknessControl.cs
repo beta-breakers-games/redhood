@@ -8,6 +8,7 @@ namespace Runtime.Features.World
         private GameContext _context;
         [Header("Start")]
         [SerializeField] private Transform startPoint;
+        [SerializeField] private Transform stopPoint;
 
         [Header("Motion")]
         [SerializeField] private float speed = 0.8f;
@@ -74,6 +75,12 @@ namespace Runtime.Features.World
             if (_stunTimer > 0f)
             {
                 _stunTimer -= Time.deltaTime;
+                return;
+            }
+            if (stopPoint != null && _x >= stopPoint.position.x)
+            {
+                _x = stopPoint.position.x;
+                transform.position = new Vector3(_x, _y, transform.position.z);
                 return;
             }
             _x += speed * Time.deltaTime;
