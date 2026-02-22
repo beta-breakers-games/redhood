@@ -1,4 +1,8 @@
 ﻿<Solution>
-  <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="RedHood.Runtime.csproj" />
+  <Project Path="BE2.Readme.Editor.csproj" />
+  <Project Path="Bundos.WaterSystem.Editor.csproj" />
+  <Project Path="RedHood.Settings.csproj" />
+  <Project Path="BE2.Readme.Runtime.csproj" />
+  <Project Path="Bundos.WaterSystem.Runtime.csproj" />
 </Solution>
