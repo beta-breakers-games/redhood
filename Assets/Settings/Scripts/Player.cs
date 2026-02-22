@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 
         if (hit.collider != null)
         {
-        currentSurfaceTag = hit.collider.tag;
+            currentSurfaceTag = hit.collider.tag;
         }
 
         if (lastStandingTimer >= lastStandingRecordInterval)
@@ -80,7 +80,8 @@ public class Player : MonoBehaviour
         }
     }
     
-    public void RestoreToLastStanding()
+    public void TeleportToLastSafe()
+    // used in TeleportBackZone2D, but can be called from anywhere when needed
     {
         if (rb != null)  // safety check
             rb.linearVelocity = Vector2.zero;
