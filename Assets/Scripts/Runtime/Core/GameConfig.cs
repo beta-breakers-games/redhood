@@ -8,6 +8,7 @@ namespace Runtime.Core
     public class GlobalConfig
     {
         public int masterVolume = 1;
+        public int musicVolume = 1;
         public int activeSlot = 1;
     }
 
