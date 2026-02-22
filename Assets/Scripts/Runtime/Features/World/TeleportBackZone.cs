@@ -7,7 +7,8 @@ namespace Runtime.Features.World
     {
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private CameraRespawnPan cameraRespawnPan;
-        [SerializeField] private AudioSource screamAudio;
+        [Tooltip("Scream clip played before teleport. Blocks until finished.")][SerializeField] private AudioSource screamAudio;
+        [Tooltip("After teleport. Plays without blocking game time.")][SerializeField] private AudioSource blinkAudio;
         private bool _isHandlingTeleport;
 
         private void Reset()
@@ -62,8 +63,9 @@ namespace Runtime.Features.World
                 if (screamAudio.clip != null)
                     yield return new WaitForSeconds(screamAudio.clip.length);
             }
-
             yield return cameraRespawnPan.PanAndRespawn(player);
+            if (blinkAudio != null)
+                blinkAudio.Play();
             _isHandlingTeleport = false;
         }
     }
