@@ -47,5 +47,8 @@ TagManager:
   - name: ForeGround
     uniqueID: 505122745
     locked: 0
+  - name: Darkness
+    uniqueID: 2484768051
+    locked: 0
   m_RenderingLayers:
   - Default
