@@ -1,5 +1,4 @@
 using UnityEngine;
-using Runtime.Features.Player;
 
 namespace Runtime.Features.World
 {
@@ -8,7 +7,8 @@ namespace Runtime.Features.World
     {
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private CameraRespawnPan cameraRespawnPan;
-        public AudioSource screamAudio;
+        [SerializeField] private AudioSource screamAudio;
+        private bool _isHandlingTeleport;
 
         private void Reset()
         {
@@ -30,24 +30,41 @@ namespace Runtime.Features.World
             if (cameraRespawnPan == null)
                 Debug.LogError($"{nameof(TeleportBackZone2D)} requires a {nameof(CameraRespawnPan)} reference.", this);
         }
-
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag(playerTag)) return;
-            if (screamAudio)
-                screamAudio.Play();
+            if (_isHandlingTeleport) return;
+            StartCoroutine(HandleTeleport(other));
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private System.Collections.IEnumerator HandleTeleport(Collider2D other)
+        {
+            _isHandlingTeleport = true;
             // If collider is on child, GetComponentInParent is safer:
             Player.Player player = other.GetComponentInParent<Player.Player>();
             if (player == null){
                 Debug.Log("No Player reference, cannot pan camera on respawn.", this);   
-                return;
+                _isHandlingTeleport = false;
+                yield break;
             }
             if (cameraRespawnPan == null)
             {
                 Debug.Log("No CameraRespawnPan reference, cannot pan camera on respawn.", this);
-                return;
+                _isHandlingTeleport = false;
+                yield break;
             }
-            StartCoroutine(cameraRespawnPan.PanAndRespawn(player));
+
+            if (screamAudio != null)
+            {
+                screamAudio.Play();
+                if (screamAudio.clip != null)
+                    yield return new WaitForSeconds(screamAudio.clip.length);
+            }
+
+            yield return cameraRespawnPan.PanAndRespawn(player);
+            _isHandlingTeleport = false;
         }
     }
 }
