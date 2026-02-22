@@ -15,6 +15,10 @@ namespace Runtime.Features.World
         [SerializeField] private float repelStunDurationSec = 0.5f;
         [SerializeField] private bool loadFromSave = true;
 
+        [Header("Player")]
+        [SerializeField] private Runtime.Features.Player.Player player;
+        [SerializeField] private string playerTag = "Player";
+
         [SerializeField] private bool enableLogs = false;
 
         private float _x;
@@ -50,6 +54,13 @@ namespace Runtime.Features.World
                 _x = data.darknessPosition.x;
                 _y = data.darknessPosition.y;
                 transform.position = new Vector3(_x, _y, transform.position.z);
+            }
+
+            if (player == null && !string.IsNullOrEmpty(playerTag))
+            {
+                var go = GameObject.FindGameObjectWithTag(playerTag);
+                if (go != null)
+                    player = go.GetComponentInParent<Runtime.Features.Player.Player>();
             }
 
             if (enableLogs && _context != null)
@@ -101,6 +112,13 @@ namespace Runtime.Features.World
             }
             _repelRoutine = null;
             _stunTimer = Mathf.Max(0f, repelStunDurationSec);
+        }
+
+        public float GetDistanceToPlayer()
+        {
+            if (player == null)
+                return float.PositiveInfinity;
+            return Vector2.Distance(transform.position, player.transform.position);
         }
     }
 }
