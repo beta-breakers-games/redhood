@@ -3627,6 +3627,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3813,6 +3814,23 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0.9997
   sharedProfile: {fileID: 11400000, guid: 25eba542c1953c6468e15595e7f9adfb, type: 2}
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724a5da6c69e467b8b17695585b8e540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.World.CameraRespawnPan
+  panSpeed: 10
+  holdAfterPan: 0.15
+  maxPanSeconds: 0.45
+  pauseTime: 0
+  enableLogs: 0
 --- !u!1 &520619709
 GameObject:
   m_ObjectHideFlags: 0
@@ -12098,7 +12116,7 @@ Transform:
   m_GameObject: {fileID: 1594220361}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.219997, y: -19.43, z: 0}
+  m_LocalPosition: {x: 18.219997, y: -13.67, z: 0}
   m_LocalScale: {x: 8.30142, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12117,6 +12135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeleportBackZone2D
   playerTag: Player
+  cameraRespawnPan: {fileID: 0}
 --- !u!61 &1594220364
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14037,6 +14056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeleportBackZone2D
   playerTag: Player
+  cameraRespawnPan: {fileID: 0}
 --- !u!61 &1823103201
 BoxCollider2D:
   m_ObjectHideFlags: 0
