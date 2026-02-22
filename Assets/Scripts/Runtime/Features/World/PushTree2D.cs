@@ -34,5 +34,7 @@ public class PushTree2D : MonoBehaviour
         if (other.relativeVelocity.magnitude < 0.1f)
             return;
         thisRigidbody.bodyType = RigidbodyType2D.Dynamic;
+        gameObject.layer = LayerMask.NameToLayer("Ground");
+        
     }
 }
