@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1dfef6f4320e6bd41a5a47f22fa534b0
+guid: 5ffbea7833ffcc1449e89e6cdc66b543
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4253666380140086649
-    second: GroundMud_0
+      213: -6075194966662100325
+    second: Wall_Cliff_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GroundMud_0
+      name: Wall_Cliff_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 3099
-        height: 342
+        width: 3584
+        height: 889
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78a7ab2d6f0f7f4c0800000000000000
-      internalID: -4253666380140086649
+      spriteID: b9a4dd69d5290bba0800000000000000
+      internalID: -6075194966662100325
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GroundMud_0: -4253666380140086649
+      Wall_Cliff_0: -6075194966662100325
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
