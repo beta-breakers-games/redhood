@@ -8,6 +8,7 @@ namespace Runtime.Features.World
     {
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private CameraRespawnPan cameraRespawnPan;
+        public AudioSource screamAudio;
 
         private void Reset()
         {
@@ -33,6 +34,8 @@ namespace Runtime.Features.World
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag(playerTag)) return;
+            if (screamAudio)
+                screamAudio.Play();
             // If collider is on child, GetComponentInParent is safer:
             Player.Player player = other.GetComponentInParent<Player.Player>();
             if (player == null){
