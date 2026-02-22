@@ -3826,9 +3826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724a5da6c69e467b8b17695585b8e540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.World.CameraRespawnPan
-  panSpeed: 10
-  holdAfterPan: 0.15
-  maxPanSeconds: 0.45
+  panSpeed: 8
+  holdAfterPan: 0.12
+  maxPanSeconds: 0.48
   pauseTime: 0
   enableLogs: 0
 --- !u!1 &520619709
