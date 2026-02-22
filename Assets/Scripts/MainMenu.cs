@@ -12,6 +12,12 @@ public class MainMenu : MonoBehaviour
 
         SceneManager.LoadScene("RedHood");
     }
+
+        public void Menu()
+    {
+
+        SceneManager.LoadScene("Menu");
+    }
  
     public void Quit()
     {

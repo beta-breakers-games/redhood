@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RedHood.unity
     guid: 65488039ec7c04c4c99a1c07c6da439a
+  - enabled: 1
+    path: Assets/Scenes/Loose.unity
+    guid: 8be723d338b9a4d4fbde601a2b97d2ca
+  - enabled: 1
+    path: Assets/Scenes/Outro.unity
+    guid: 13ab5066f5654c14b8593cbbf0b58f93
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
