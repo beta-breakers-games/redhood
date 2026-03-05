@@ -1,4 +1,16 @@
-# Cloning This Unity Project on Windows (with Git LFS)
+# The Redhood Game
+
+by BetaBreakers team
+
+Status: in development
+Stage: alpha
+
+This Redhood is atmospheric 2D platformer where you try to run out the darknes tha followes you in throught the forest. 
+
+Game is build in Unity engine 6.0+. And was created as part of Brno GameJam 2026
+
+
+## Cloning This Unity Project on Windows (with Git LFS)
 
 Repository: https://github.com/beta-breakers-games/redhood/
 
@@ -13,7 +25,7 @@ Version Control → Visible Meta Files
 
 ---
 
-## 1. Install Git for Windows
+### 1. Install Git for Windows
 
 Download: https://git-scm.com/download/win
 
@@ -23,7 +35,7 @@ Verify installation (Git Bash):
 git --version
 ```
 
-## 2. Install Git LFS
+### 2. Install Git LFS
 
 Download:
 https://git-lfs.com/
@@ -35,13 +47,13 @@ git lfs --version
 ```
 This step is required once per machine.
 
-## 3. Clone the Repository
+### 3. Clone the Repository
 ```bash
 git clone https://github.com/beta-breakers-games/redhood.git
 cd redhood
 ```
 
-## 4. Ensure LFS Files Are Downloaded
+### 4. Ensure LFS Files Are Downloaded
 
 ```bash
 git lfs pull
@@ -49,7 +61,7 @@ git lfs ls-files
 ```
 If git lfs ls-files lists files, LFS is working correctly.
 
-## 5. Open in Unity
+### 5. Open in Unity
 
 Install the correct Unity 6 version via Unity Hub.
 
