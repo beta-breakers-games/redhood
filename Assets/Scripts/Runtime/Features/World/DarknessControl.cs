@@ -34,6 +34,10 @@ namespace Runtime.Features.World
         [SerializeField] private bool enableLoseCheck = true;
         [Tooltip("Distance at or below which the player is considered caught.")]
         [SerializeField] private float loseDistance = 1f;
+        [Tooltip("If enabled, triggers lose when player is behind darkness on X axis.")]
+        [SerializeField] private bool enableBehindLoseCheck = true;
+        [Tooltip("Extra X margin for behind check. Lose when player.x <= darkness.x - this value.")]
+        [SerializeField] private float behindLoseOffset = 0f;
         [Tooltip("Delay before loading the lose scene (seconds).")]
         [SerializeField] private float loseDelaySec = 1f;
         [Tooltip("Disable player movement while waiting to load the lose scene.")]
@@ -94,7 +98,9 @@ namespace Runtime.Features.World
 
         private void Update()
         {
-            if (!_hasLost && enableLoseCheck && GetDistanceToPlayer() <= loseDistance)
+            bool caughtByDistance = enableLoseCheck && GetDistanceToPlayer() <= loseDistance;
+            bool caughtByBehind = enableBehindLoseCheck && IsPlayerBehindDarkness();
+            if (!_hasLost && (caughtByDistance || caughtByBehind))
             {
                 TriggerLose();
                 return;
@@ -155,6 +161,13 @@ namespace Runtime.Features.World
             if (player == null)
                 return float.PositiveInfinity;
             return Vector2.Distance(transform.position, player.transform.position);
+        }
+
+        public bool IsPlayerBehindDarkness()
+        {
+            if (player == null)
+                return false;
+            return player.transform.position.x <= transform.position.x - behindLoseOffset;
         }
 
         public void TriggerLose()
