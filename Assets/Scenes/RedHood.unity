@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.World.WinZone2D
   playerTag: Player
-  winSceneName: you_win
+  winSceneName: Outro
   delaySec: 0.1
   disablePlayerOnWin: 1
 --- !u!1 &106404522
@@ -17162,7 +17162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: RedHood.Runtime::Runtime.Features.World.WinZone2D
   playerTag: Player
-  winSceneName: you_win
+  winSceneName: Outro
   delaySec: 0.2
   disablePlayerOnWin: 1
 --- !u!1 &1391278939

@@ -8,7 +8,7 @@ namespace Runtime.Features.World
     public class WinZone2D : MonoBehaviour
     {
         [SerializeField] private string playerTag = "Player";
-        [SerializeField] private string winSceneName = "you_win";
+        [SerializeField] private string winSceneName = "Outro";
         [SerializeField] private float delaySec = 0f;
         [SerializeField] private bool disablePlayerOnWin = true;
 
